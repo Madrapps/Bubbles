@@ -2,7 +2,6 @@ package com.madrapps.floatingactionmenu
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -14,16 +13,29 @@ class FloatingActionMenu @JvmOverloads constructor(
 ) : ViewGroup(context, attrs, defStyleAttr) {
 
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        Log.d("Layout", "width = " + width)
-        Log.d("Layout", "height = " + height)
-        Log.d("Layout", "measuredWidth = " + measuredWidth)
-        Log.d("Layout", "measuredHeight = " + measuredHeight)
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        val left = paddingLeft
+        val right = r - l - paddingRight
+        var top = paddingTop
+//        val bottom = b - t - paddingBottom
 
-        Log.d("Layout", "Parent:left = " + left)
-        Log.d("Layout", "Parent:right = " + right)
-        Log.d("Layout", "Parent:top = " + top)
-        Log.d("Layout", "Parent:bottom = " + bottom)
+        (0 until childCount)
+                .map { getChildAt(it) }
+                .filter { it.visibility != GONE }
+                .reversed()
+                .forEach { child ->
+
+                    val lp = child.layoutParams as MarginLayoutParams
+
+                    val childLeft = left + lp.leftMargin
+                    val childRight = right - lp.rightMargin
+                    val childTop = top + lp.topMargin
+                    val childBottom = childTop + child.measuredHeight
+
+                    child.layout(childLeft, childTop, childRight, childBottom)
+
+                    top = childBottom + lp.bottomMargin
+                }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -42,10 +54,9 @@ class FloatingActionMenu @JvmOverloads constructor(
                     maxWidth = child.measuredWidth + lp.leftMargin + lp.rightMargin
                     maxHeight += child.measuredHeight + lp.topMargin + lp.bottomMargin
                 }
-        val anchorView = (parent as ViewGroup).findViewById<View>(R.id.floatingActionButton)
-        Log.d("Layout", "anchorView:height = " + anchorView?.measuredHeight)
-        Log.d("Layout", "anchorView:width = " + anchorView?.measuredWidth)
 
+        // TODO We need to obtain this ANCHOR ID from the anchor tag
+        val anchorView = (parent as ViewGroup).findViewById<View>(R.id.floatingActionButton)
         setMeasuredDimension(maxWidth, maxHeight + (anchorView?.measuredHeight ?: 0))
     }
 
