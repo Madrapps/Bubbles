@@ -6,20 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.madrapps.floatingactionmenu.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:clickable="true"
         android:focusable="true"
@@ -27,29 +19,101 @@
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@android:drawable/ic_lock_lock" />
 
+    <!--<RelativeLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="68dp"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent">-->
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/floatingActionButton1"-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:clickable="true"-->
+    <!--android:focusable="true"-->
+    <!--app:srcCompat="@android:drawable/btn_star_big_on" />-->
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/floatingActionButton2"-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:layout_below="@+id/floatingActionButton1"-->
+
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:clickable="true"-->
+    <!--android:focusable="true"-->
+    <!--app:srcCompat="@android:drawable/presence_away" />-->
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/floatingActionButton3"-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:layout_below="@+id/floatingActionButton2"-->
+
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:clickable="true"-->
+    <!--android:focusable="true"-->
+    <!--app:srcCompat="@android:drawable/presence_audio_away" />-->
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/floatingActionButton4"-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:layout_below="@+id/floatingActionButton3"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:clickable="true"-->
+    <!--android:focusable="true"-->
+    <!--app:srcCompat="@android:drawable/presence_video_away" />-->
+
+    <!--</RelativeLayout>-->
     <com.madrapps.floatingactionmenu.FloatingActionMenu
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton2"
+            android:id="@+id/floatingActionButton1"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_margin="10dp"
             android:clickable="true"
             android:focusable="true"
             app:srcCompat="@android:drawable/btn_star_big_on" />
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton2"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_margin="10dp"
             android:clickable="true"
             android:focusable="true"
             app:srcCompat="@android:drawable/presence_away" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton3"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@android:drawable/presence_audio_away" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton4"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@android:drawable/presence_video_away" />
 
     </com.madrapps.floatingactionmenu.FloatingActionMenu>
 </android.support.constraint.ConstraintLayout>
