@@ -88,23 +88,15 @@ class FloatingActionMenu @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        var maxWidth = 0
-        var maxHeight = 0
-        children()
-                .forEach { child ->
-                    measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0)
-
-                    val lp: MarginLayoutParams = child.layoutParams as MarginLayoutParams
-
-                    maxWidth = child.measuredWidth + lp.leftMargin + lp.rightMargin
-                    maxHeight += child.measuredHeight + lp.topMargin + lp.bottomMargin
-                }
+        children().forEach { child ->
+            measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0)
+        }
 
         // TODO We need to obtain this ANCHOR ID from the anchor tag
         val anchorView = (parent as ViewGroup).findViewById<View>(R.id.floatingActionButton)
 
-        layout.measure(children(), anchorSize(anchorView))
-        setMeasuredDimension(maxWidth, maxHeight + (anchorView?.measuredHeight ?: 0))
+        val (width, height) = layout.measure(children(), anchorSize(anchorView))
+        setMeasuredDimension(width, height)
     }
 
     private fun anchorSize(anchorView: View?) =
