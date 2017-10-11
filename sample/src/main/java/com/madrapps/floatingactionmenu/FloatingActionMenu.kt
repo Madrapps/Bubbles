@@ -7,13 +7,17 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.animation.DecelerateInterpolator
+import android.view.animation.AnticipateInterpolator
+import android.view.animation.OvershootInterpolator
+import com.madrapps.floatingactionmenu.layouts.Layout
+import com.madrapps.floatingactionmenu.util.Size
 
 class FloatingActionMenu @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0
 ) : ViewGroup(context, attrs, defStyleAttr) {
+
 
     private var openAnimator = AnimatorInflater.loadAnimator(context, R.animator.open) as AnimatorSet
     private var openAnimator1 = AnimatorInflater.loadAnimator(context, R.animator.open) as AnimatorSet
@@ -24,22 +28,28 @@ class FloatingActionMenu @JvmOverloads constructor(
     private var closeAnimator2 = AnimatorInflater.loadAnimator(context, R.animator.close) as AnimatorSet
     private var closeAnimator3 = AnimatorInflater.loadAnimator(context, R.animator.close) as AnimatorSet
 
+    private lateinit var layout: Layout
+
     init {
         openAnimator1.startDelay = 30
         openAnimator2.startDelay = 60
         openAnimator3.startDelay = 90
-        openAnimator.interpolator = DecelerateInterpolator()
-        openAnimator1.interpolator = DecelerateInterpolator()
-        openAnimator2.interpolator = DecelerateInterpolator()
-        openAnimator3.interpolator = DecelerateInterpolator()
+        openAnimator.interpolator = OvershootInterpolator()
+        openAnimator1.interpolator = OvershootInterpolator()
+        openAnimator2.interpolator = OvershootInterpolator()
+        openAnimator3.interpolator = OvershootInterpolator()
 
         closeAnimator.startDelay = 90
         closeAnimator1.startDelay = 60
         closeAnimator2.startDelay = 30
-        closeAnimator.interpolator = DecelerateInterpolator()
-        closeAnimator1.interpolator = DecelerateInterpolator()
-        closeAnimator2.interpolator = DecelerateInterpolator()
-        closeAnimator3.interpolator = DecelerateInterpolator()
+        closeAnimator.interpolator = AnticipateInterpolator()
+        closeAnimator1.interpolator = AnticipateInterpolator()
+        closeAnimator2.interpolator = AnticipateInterpolator()
+        closeAnimator3.interpolator = AnticipateInterpolator()
+    }
+
+    fun configure(layout: Layout) {
+        this.layout = layout
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
@@ -80,9 +90,7 @@ class FloatingActionMenu @JvmOverloads constructor(
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         var maxWidth = 0
         var maxHeight = 0
-        (0 until childCount)
-                .map { getChildAt(it) }
-                .filter { it.visibility != GONE }
+        children()
                 .forEach { child ->
                     measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0)
 
@@ -94,7 +102,18 @@ class FloatingActionMenu @JvmOverloads constructor(
 
         // TODO We need to obtain this ANCHOR ID from the anchor tag
         val anchorView = (parent as ViewGroup).findViewById<View>(R.id.floatingActionButton)
+
+        layout.measure(children(), anchorSize(anchorView))
         setMeasuredDimension(maxWidth, maxHeight + (anchorView?.measuredHeight ?: 0))
+    }
+
+    private fun anchorSize(anchorView: View?) =
+            Size(anchorView?.measuredWidth ?: 0, anchorView?.measuredHeight ?: 0)
+
+    private fun children(): List<View> {
+        return (0 until childCount)
+                .map { getChildAt(it) }
+                .filter { it.visibility != GONE }
     }
 
     override fun generateLayoutParams(attrs: AttributeSet?) = MarginLayoutParams(context, attrs)
