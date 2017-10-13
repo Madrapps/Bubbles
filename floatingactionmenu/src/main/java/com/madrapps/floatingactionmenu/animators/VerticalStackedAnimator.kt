@@ -39,13 +39,13 @@ class VerticalStackedAnimator(private val context: Context) : Animator {
     override fun hide() = hideAnimators.forEach(AnimatorSet::start)
 
     private fun showAnimator(): AnimatorSet {
-        val animator = AnimatorInflater.loadAnimator(context, R.animator.open) as AnimatorSet
+        val animator = AnimatorInflater.loadAnimator(context, R.animator.vertical_stacked_show) as AnimatorSet
         animator.interpolator = OvershootInterpolator()
         return animator
     }
 
     private fun hideAnimator(): AnimatorSet {
-        val animator = AnimatorInflater.loadAnimator(context, R.animator.close) as AnimatorSet
+        val animator = AnimatorInflater.loadAnimator(context, R.animator.vertical_stacked_hide) as AnimatorSet
         animator.interpolator = AnticipateInterpolator()
         return animator
     }
