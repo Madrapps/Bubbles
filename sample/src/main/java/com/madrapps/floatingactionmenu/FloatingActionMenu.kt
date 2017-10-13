@@ -83,6 +83,7 @@ class FloatingActionMenu @JvmOverloads constructor(
 
     fun setAnchor(anchor: View?) {
         anchorView = anchor
+        invalidate()
     }
 
     private fun setAnchor(id: Int) {
