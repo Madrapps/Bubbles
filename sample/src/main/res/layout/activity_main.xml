@@ -17,7 +17,7 @@
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@android:drawable/ic_lock_lock" />
+        app:srcCompat="@drawable/ic_share_white_24dp" />
 
     <com.madrapps.floatingactionmenu.FloatingActionMenu
         android:id="@+id/menuLayout"
@@ -36,7 +36,19 @@
             android:layout_margin="5dp"
             android:clickable="true"
             android:focusable="true"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_facebook" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton5"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:visibility="gone"
+            android:focusable="true"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_youtube" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton2"
@@ -45,7 +57,8 @@
             android:layout_margin="5dp"
             android:clickable="true"
             android:focusable="true"
-            app:srcCompat="@android:drawable/presence_away" />
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_twitter" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton3"
@@ -54,7 +67,8 @@
             android:layout_margin="5dp"
             android:clickable="true"
             android:focusable="true"
-            app:srcCompat="@android:drawable/presence_audio_away" />
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_youtube" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton4"
@@ -63,7 +77,8 @@
             android:layout_margin="5dp"
             android:clickable="true"
             android:focusable="true"
-            app:srcCompat="@android:drawable/presence_video_away" />
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_instagram" />
 
     </com.madrapps.floatingactionmenu.FloatingActionMenu>
 </android.support.constraint.ConstraintLayout>

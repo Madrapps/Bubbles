@@ -55,10 +55,6 @@ class FloatingActionMenu @JvmOverloads constructor(
         animator.configure(children())
     }
 
-    private fun getAnchorView(): View {
-        return (parent as ViewGroup).findViewById(R.id.floatingActionButton)
-    }
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         children().forEach {
@@ -68,13 +64,21 @@ class FloatingActionMenu @JvmOverloads constructor(
         // TODO We need to obtain this ANCHOR ID from the anchor tag
         val anchorView = getAnchorView()
 
-        val (width, height) = layout.measure(children(), size(anchorView))
+        val (width, height) = layout.measure(children(), anchorView.size())
         setMeasuredDimension(width, height)
     }
 
-    private fun size(view: View): Size {
-        anchorSize.width = view.measuredWidth
-        anchorSize.height = view.measuredHeight
+    fun open() = animator.show()
+
+    fun close() = animator.hide()
+
+    private fun getAnchorView(): View {
+        return (parent as ViewGroup).findViewById(R.id.floatingActionButton)
+    }
+
+    private fun View.size(): Size {
+        anchorSize.width = this.measuredWidth
+        anchorSize.height = this.measuredHeight
         return anchorSize
     }
 
@@ -89,7 +93,4 @@ class FloatingActionMenu @JvmOverloads constructor(
     override fun checkLayoutParams(p: LayoutParams?) = p is MarginLayoutParams
     override fun generateLayoutParams(p: LayoutParams?) = MarginLayoutParams(p)
     override fun shouldDelayChildPressedState() = false
-
-    fun open() = animator.show()
-    fun close() = animator.hide()
 }
