@@ -12,18 +12,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val menu = findViewById<ActionMenu>(R.id.menuLayout)
+        val menu = findViewById<ActionMenu>(R.id.floatingActionMenu)
         menu.configure(VerticalStackedLayout(), VerticalStackedAnimator(applicationContext))
 
-        var flag = true
-        findViewById<View>(R.id.floatingActionButton).setOnClickListener({
-            if (flag) {
+        var flag = false
+        findViewById<View>(R.id.floatingActionButton).setOnClickListener {
+            flag = if (flag) {
                 menu.open()
-                flag = false
+                false
             } else {
                 menu.close()
-                flag = true
+                true
             }
-        })
+        }
     }
 }

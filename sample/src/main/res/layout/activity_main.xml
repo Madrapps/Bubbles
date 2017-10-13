@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/ic_share_white_24dp" />
 
     <com.madrapps.bubbles.ActionMenu
-        android:id="@+id/menuLayout"
+        android:id="@+id/floatingActionMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
