@@ -52,7 +52,7 @@ class FloatingActionMenu @JvmOverloads constructor(
         }
 
         layout.position(children(), parentPosition, anchorPosition)
-        animator.configure(children())
+        animator.configure(children(), parentPosition, anchorPosition)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
