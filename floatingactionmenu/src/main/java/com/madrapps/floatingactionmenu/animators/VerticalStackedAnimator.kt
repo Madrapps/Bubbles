@@ -3,6 +3,7 @@ package com.madrapps.floatingactionmenu.animators
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.content.Context
+import android.graphics.Rect
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import android.view.animation.OvershootInterpolator
@@ -13,7 +14,7 @@ class VerticalStackedAnimator(private val context: Context) : Animator {
     private val showAnimators = ArrayList<AnimatorSet>()
     private val hideAnimators = ArrayList<AnimatorSet>()
 
-    override fun configure(children: List<View>) {
+    override fun configure(children: List<View>, parent: Rect, anchor: Rect) {
         reconfigureAnimatorsOnModification(children, showAnimators, false) { showAnimator() }
         reconfigureAnimatorsOnModification(children, hideAnimators, true) { hideAnimator() }
         children.forEachIndexed { i, child ->
