@@ -24,11 +24,12 @@ class FloatingActionMenu @JvmOverloads constructor(
     private val anchorSize = Size(0, 0)
 
     private var anchorView: View? = null
+    private var anchorId: Int = -1
 
-    fun configure(layout: Layout, animator: Animator, anchor: View? = anchorView) {
-        this.layout = layout
-        this.animator = animator
-        setAnchor(anchor)
+    init {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.FloatingActionMenu, defStyleAttr, 0)
+        anchorId = typedArray.getResourceId(R.styleable.FloatingActionMenu_anchor, -1)
+        typedArray.recycle()
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
@@ -65,9 +66,15 @@ class FloatingActionMenu @JvmOverloads constructor(
         children().forEach {
             measureChildWithMargins(it, widthMeasureSpec, 0, heightMeasureSpec, 0)
         }
-
+        setAnchor(anchorId)
         val (width, height) = layout.measure(children(), getAnchorSize())
         setMeasuredDimension(width, height)
+    }
+
+    fun configure(layout: Layout, animator: Animator, anchor: View? = anchorView) {
+        this.layout = layout
+        this.animator = animator
+        setAnchor(anchor)
     }
 
     fun open() = animator.show()
@@ -78,6 +85,12 @@ class FloatingActionMenu @JvmOverloads constructor(
         anchorView = anchor
     }
 
+    private fun setAnchor(id: Int) {
+        if (id != -1 && anchorView == null) {
+            val anchorView = (parent as ViewGroup).findViewById<View>(id)
+            setAnchor(anchorView)
+        }
+    }
 
     private fun getAnchorSize(): Size {
         anchorSize.width = anchorView?.measuredWidth ?: 0

@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val menu = findViewById<FloatingActionMenu>(R.id.menuLayout)
-        menu.configure(VerticalStackedLayout(), VerticalStackedAnimator(applicationContext), findViewById(R.id.floatingActionButton))
+        menu.configure(VerticalStackedLayout(), VerticalStackedAnimator(applicationContext))
 
         var flag = true
         findViewById<View>(R.id.floatingActionButton).setOnClickListener({
