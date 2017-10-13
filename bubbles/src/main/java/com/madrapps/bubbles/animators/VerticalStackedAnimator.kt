@@ -1,4 +1,4 @@
-package com.madrapps.floatingactionmenu.animators
+package com.madrapps.bubbles.animators
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
@@ -7,7 +7,7 @@ import android.graphics.Rect
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import android.view.animation.OvershootInterpolator
-import com.madrapps.floatingactionmenu.R
+import com.madrapps.bubbles.R
 
 class VerticalStackedAnimator(private val context: Context) : Animator {
 

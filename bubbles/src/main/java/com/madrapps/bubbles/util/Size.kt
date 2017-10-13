@@ -1,4 +1,4 @@
-package com.madrapps.floatingactionmenu.util
+package com.madrapps.bubbles.util
 
 /**
  * Immutable class for describing width and height dimensions in pixels.

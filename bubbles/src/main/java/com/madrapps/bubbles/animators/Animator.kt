@@ -1,4 +1,4 @@
-package com.madrapps.floatingactionmenu.animators
+package com.madrapps.bubbles.animators
 
 import android.graphics.Rect
 import android.view.View

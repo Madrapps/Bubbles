@@ -1,9 +1,9 @@
-package com.madrapps.floatingactionmenu.layouts
+package com.madrapps.bubbles.layouts
 
 import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
-import com.madrapps.floatingactionmenu.util.Size
+import com.madrapps.bubbles.util.Size
 
 class VerticalStackedLayout : Layout {
 

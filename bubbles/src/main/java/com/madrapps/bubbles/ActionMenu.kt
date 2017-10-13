@@ -1,4 +1,4 @@
-package com.madrapps.floatingactionmenu
+package com.madrapps.bubbles
 
 import android.content.Context
 import android.graphics.Rect
@@ -6,11 +6,11 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import com.madrapps.floatingactionmenu.animators.Animator
-import com.madrapps.floatingactionmenu.layouts.Layout
-import com.madrapps.floatingactionmenu.util.Size
+import com.madrapps.bubbles.animators.Animator
+import com.madrapps.bubbles.layouts.Layout
+import com.madrapps.bubbles.util.Size
 
-class FloatingActionMenu @JvmOverloads constructor(
+class ActionMenu @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0
@@ -27,8 +27,8 @@ class FloatingActionMenu @JvmOverloads constructor(
     private var anchorId: Int = -1
 
     init {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.FloatingActionMenu, defStyleAttr, 0)
-        anchorId = typedArray.getResourceId(R.styleable.FloatingActionMenu_anchor, -1)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ActionMenu, defStyleAttr, 0)
+        anchorId = typedArray.getResourceId(R.styleable.ActionMenu_anchor, -1)
         typedArray.recycle()
     }
 
