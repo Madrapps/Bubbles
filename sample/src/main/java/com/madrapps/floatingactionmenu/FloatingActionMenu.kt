@@ -20,35 +20,40 @@ class FloatingActionMenu @JvmOverloads constructor(
     private lateinit var animator: Animator
 
     private val parentPosition = Rect()
-    private val anchorPosition = Rect()
-    private val anchorSize = Size()
+    private val anchorPosition = Rect(0, 0, 0, 0)
+    private val anchorSize = Size(0, 0)
 
-    fun configure(layout: Layout, animator: Animator) {
+    private var anchorView: View? = null
+
+    fun configure(layout: Layout, animator: Animator, anchor: View? = anchorView) {
         this.layout = layout
         this.animator = animator
+        setAnchor(anchor)
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        parentPosition.setEmpty()
+        anchorPosition.setEmpty()
 
         parentPosition.left = paddingLeft
         parentPosition.top = paddingTop
         parentPosition.right = r - l - paddingRight
         parentPosition.bottom = b - t - paddingBottom
 
-        // TODO We need to obtain this ANCHOR ID from the anchor tag
-        val anchorView = getAnchorView()
+        val anchor = anchorView
+        if (anchor != null) {
+            anchorPosition.left = anchor.left - l - paddingLeft
+            anchorPosition.top = anchor.top - t - paddingTop
+            anchorPosition.right = anchor.right - l - paddingLeft
+            anchorPosition.bottom = anchor.bottom - t - paddingTop
 
-        anchorPosition.left = anchorView.left - l - paddingLeft
-        anchorPosition.top = anchorView.top - t - paddingTop
-        anchorPosition.right = anchorView.right - l - paddingLeft
-        anchorPosition.bottom = anchorView.bottom - t - paddingTop
-
-        val lp = anchorView.layoutParams
-        if (lp is MarginLayoutParams) {
-            anchorPosition.left -= lp.leftMargin
-            anchorPosition.top -= lp.topMargin
-            anchorPosition.right += lp.rightMargin
-            anchorPosition.bottom += lp.bottomMargin
+            val lp = anchor.layoutParams
+            if (lp is MarginLayoutParams) {
+                anchorPosition.left -= lp.leftMargin
+                anchorPosition.top -= lp.topMargin
+                anchorPosition.right += lp.rightMargin
+                anchorPosition.bottom += lp.bottomMargin
+            }
         }
 
         layout.position(children(), parentPosition, anchorPosition)
@@ -61,10 +66,7 @@ class FloatingActionMenu @JvmOverloads constructor(
             measureChildWithMargins(it, widthMeasureSpec, 0, heightMeasureSpec, 0)
         }
 
-        // TODO We need to obtain this ANCHOR ID from the anchor tag
-        val anchorView = getAnchorView()
-
-        val (width, height) = layout.measure(children(), anchorView.size())
+        val (width, height) = layout.measure(children(), getAnchorSize())
         setMeasuredDimension(width, height)
     }
 
@@ -72,13 +74,14 @@ class FloatingActionMenu @JvmOverloads constructor(
 
     fun close() = animator.hide()
 
-    private fun getAnchorView(): View {
-        return (parent as ViewGroup).findViewById(R.id.floatingActionButton)
+    fun setAnchor(anchor: View?) {
+        anchorView = anchor
     }
 
-    private fun View.size(): Size {
-        anchorSize.width = this.measuredWidth
-        anchorSize.height = this.measuredHeight
+
+    private fun getAnchorSize(): Size {
+        anchorSize.width = anchorView?.measuredWidth ?: 0
+        anchorSize.height = anchorView?.measuredHeight ?: 0
         return anchorSize
     }
 
