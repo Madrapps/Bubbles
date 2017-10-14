@@ -56,9 +56,7 @@ class ActionMenu @JvmOverloads constructor(
                 anchorPosition.bottom += lp.bottomMargin
             }
         }
-
-        layout.position(children(), parentPosition, anchorPosition)
-        animator.configure(children(), parentPosition, anchorPosition)
+        layout()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -67,7 +65,8 @@ class ActionMenu @JvmOverloads constructor(
             measureChildWithMargins(it, widthMeasureSpec, 0, heightMeasureSpec, 0)
         }
         setAnchor(anchorId)
-        val (width, height) = layout.measure(children(), getAnchorSize())
+
+        val (width, height) = measure()
         setMeasuredDimension(width, height)
     }
 
@@ -84,6 +83,20 @@ class ActionMenu @JvmOverloads constructor(
     fun setAnchor(anchor: View?) {
         anchorView = anchor
         invalidate()
+    }
+
+    private fun measure(): Size {
+        if (isInEditMode) {
+            return Size(100, 100)
+        }
+        return layout.measure(children(), getAnchorSize())
+    }
+
+    private fun layout() {
+        if (!isInEditMode) {
+            layout.position(children(), parentPosition, anchorPosition)
+            animator.configure(children(), parentPosition, anchorPosition)
+        }
     }
 
     private fun setAnchor(id: Int) {
