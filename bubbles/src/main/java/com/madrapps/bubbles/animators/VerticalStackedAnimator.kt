@@ -9,14 +9,14 @@ import android.view.animation.AnticipateInterpolator
 import android.view.animation.OvershootInterpolator
 import com.madrapps.bubbles.R
 
-class VerticalStackedAnimator(private val context: Context) : Animator {
+class VerticalStackedAnimator : Animator {
 
     private val showAnimators = ArrayList<AnimatorSet>()
     private val hideAnimators = ArrayList<AnimatorSet>()
 
-    override fun configure(children: List<View>, parent: Rect, anchor: Rect) {
-        reconfigureAnimatorsOnModification(children, showAnimators, false) { showAnimator() }
-        reconfigureAnimatorsOnModification(children, hideAnimators, true) { hideAnimator() }
+    override fun configure(context: Context, children: List<View>, parent: Rect, anchor: Rect) {
+        reconfigureAnimatorsOnModification(children, showAnimators, false) { showAnimator(context) }
+        reconfigureAnimatorsOnModification(children, hideAnimators, true) { hideAnimator(context) }
         children.forEachIndexed { i, child ->
             showAnimators[i].setTarget(child)
             hideAnimators[i].setTarget(child)
@@ -39,13 +39,13 @@ class VerticalStackedAnimator(private val context: Context) : Animator {
     override fun show() = showAnimators.forEach(AnimatorSet::start)
     override fun hide() = hideAnimators.forEach(AnimatorSet::start)
 
-    private fun showAnimator(): AnimatorSet {
+    private fun showAnimator(context: Context): AnimatorSet {
         val animator = AnimatorInflater.loadAnimator(context, R.animator.vertical_stacked_show) as AnimatorSet
         animator.interpolator = OvershootInterpolator()
         return animator
     }
 
-    private fun hideAnimator(): AnimatorSet {
+    private fun hideAnimator(context: Context): AnimatorSet {
         val animator = AnimatorInflater.loadAnimator(context, R.animator.vertical_stacked_hide) as AnimatorSet
         animator.interpolator = AnticipateInterpolator()
         return animator

@@ -28,10 +28,19 @@ class ActionMenu @JvmOverloads constructor(
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ActionMenu, defStyleAttr, 0)
-        anchorId = typedArray.getResourceId(R.styleable.ActionMenu_anchor, -1)
-        val layoutString: String? = typedArray.getString(R.styleable.ActionMenu_menu_layout)
-        setLayout(layoutString)
-        typedArray.recycle()
+        with(typedArray) {
+            anchorId = getResourceId(R.styleable.ActionMenu_anchor, -1)
+            setLayout(getString(R.styleable.ActionMenu_menu_layout))
+            setAnimator(getString(R.styleable.ActionMenu_menu_animator))
+            recycle()
+        }
+    }
+
+    private fun setAnimator(animatorString: String?) {
+        if (animatorString != null) {
+            val instance = getClazz(animatorString).newInstance()
+            this.animator = instance as Animator
+        }
     }
 
     private fun setLayout(layoutString: String?) {
@@ -87,33 +96,49 @@ class ActionMenu @JvmOverloads constructor(
         setMeasuredDimension(width, height)
     }
 
+    fun open() = animator.show()
+
+    fun close() = animator.hide()
+
+    @Suppress("unused")
     fun configure(layout: Layout, animator: Animator, anchor: View? = anchorView) {
         this.layout = layout
         this.animator = animator
         setAnchor(anchor)
     }
 
-    fun open() = animator.show()
+    @Suppress("unused")
+    fun setLayout(layout: Layout) {
+        this.layout = layout
+        invalidate()
+    }
 
-    fun close() = animator.hide()
+    @Suppress("unused")
+    fun setAnimator(animator: Animator) {
+        this.animator = animator
+        invalidate()
+    }
 
+    @Suppress("MemberVisibilityCanPrivate")
     fun setAnchor(anchor: View?) {
         anchorView = anchor
         invalidate()
     }
 
+    @Suppress("SENSELESS_COMPARISON")
     private fun measure(): Size {
-        if (isInEditMode) {
+        if (isInEditMode && layout == null) { // layout may be null in EditMode
             return Size(100, 100)
         }
         return layout.measure(children(), getAnchorSize())
     }
 
+    @Suppress("SENSELESS_COMPARISON")
     private fun layout() {
-        if (!isInEditMode) {
-            layout.position(children(), parentPosition, anchorPosition)
-            animator.configure(children(), parentPosition, anchorPosition)
-        }
+        if (isInEditMode && (layout == null || animator == null)) return // layout/animator may be null in edit mode
+
+        layout.position(children(), parentPosition, anchorPosition)
+        animator.configure(context, children(), parentPosition, anchorPosition)
     }
 
     private fun setAnchor(id: Int) {

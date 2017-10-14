@@ -29,6 +29,7 @@
         app:anchor="@+id/floatingActionButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:menu_animator="com.madrapps.bubbles.animators.VerticalStackedAnimator"
         app:menu_layout="com.madrapps.bubbles.layouts.VerticalStackedLayout">
 
         <android.support.design.widget.FloatingActionButton
