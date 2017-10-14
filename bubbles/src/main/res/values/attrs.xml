@@ -2,5 +2,7 @@
 <resources>
     <declare-styleable name="ActionMenu">
         <attr name="anchor" format="reference" />
+        <attr name="menu_layout" format="string" />
+        <attr name="menu_animator" format="string" />
     </declare-styleable>
 </resources>

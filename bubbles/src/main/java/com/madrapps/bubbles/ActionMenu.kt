@@ -29,7 +29,24 @@ class ActionMenu @JvmOverloads constructor(
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ActionMenu, defStyleAttr, 0)
         anchorId = typedArray.getResourceId(R.styleable.ActionMenu_anchor, -1)
+        val layoutString: String? = typedArray.getString(R.styleable.ActionMenu_menu_layout)
+        setLayout(layoutString)
         typedArray.recycle()
+    }
+
+    private fun setLayout(layoutString: String?) {
+        if (layoutString != null) {
+            val instance = getClazz(layoutString).newInstance()
+            this.layout = instance as Layout
+        }
+    }
+
+    private fun getClazz(classString: String?): Class<*> {
+        try {
+            return javaClass.classLoader.loadClass(classString)
+        } catch (e: Exception) {
+            throw IllegalArgumentException(classString + " doesn't exist", e)
+        }
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {

@@ -25,10 +25,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        app:anchor="@+id/floatingActionButton"
         android:layout_marginRight="16dp"
+        app:anchor="@+id/floatingActionButton"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu_layout="com.madrapps.bubbles.layouts.VerticalStackedLayout">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton1"
@@ -46,8 +47,8 @@
             android:layout_height="40dp"
             android:layout_margin="5dp"
             android:clickable="true"
-            android:visibility="gone"
             android:focusable="true"
+            android:visibility="gone"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_youtube" />
 
