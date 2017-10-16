@@ -1,5 +1,16 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: "com.jfrog.bintray"
+
+def projectVersion = "0.1"
+def projectGroupId = "com.github.madrapps"
+def siteUrl = 'https://github.com/Madrapps/Bubbles'
+def gitUrl = 'https://github.com/Madrapps/Bubbles.git'
+def fullName = "com.github.madrapps:bubbles"
+
+version = projectVersion
+group = projectGroupId
 
 android {
     compileSdkVersion 26
@@ -10,7 +21,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName version
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -35,6 +46,85 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
 }
+
 repositories {
     mavenCentral()
+    google()
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+
+                groupId projectGroupId
+
+                name fullName
+                description = 'An animated action menu that could hold any views (especially FloatingActionButton). The animation and the layout of the menu can be customized. This is an android library.'
+                url siteUrl
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'instrap'
+                        name 'Madrapps'
+                        email 'madrasappfactory@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    excludes = ['**/*.kt'] // < ---- Exclude all kotlin files from javadoc file.
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+bintray {
+    user = System.getenv('bintray_user')
+    key = System.getenv('bintray_apikey')
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = fullName
+        userOrg = "madrapps"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+        version {
+            gpg {
+                sign = true
+            }
+        }
+    }
 }
