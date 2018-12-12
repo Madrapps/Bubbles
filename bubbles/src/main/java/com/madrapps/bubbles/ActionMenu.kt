@@ -54,7 +54,7 @@ class ActionMenu @JvmOverloads constructor(
         try {
             return javaClass.classLoader.loadClass(classString)
         } catch (e: Exception) {
-            throw IllegalArgumentException(classString + " doesn't exist", e)
+            throw IllegalArgumentException("$classString doesn't exist", e)
         }
     }
 
