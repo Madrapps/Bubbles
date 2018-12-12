@@ -1,8 +1,9 @@
-package com.madrapps.bubbles
+package com.madrapps.bubbles.sample
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.madrapps.bubbles.ActionMenu
 
 class MainActivity : AppCompatActivity() {
 
