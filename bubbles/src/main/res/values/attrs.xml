@@ -4,5 +4,6 @@
         <attr name="anchor" format="reference" />
         <attr name="menu_layout" format="string" />
         <attr name="menu_animator" format="string" />
+        <attr name="is_closed" format="boolean" />
     </declare-styleable>
 </resources>
