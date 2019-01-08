@@ -13,15 +13,10 @@ class MainActivity : AppCompatActivity() {
 
         val menu = findViewById<ActionMenu>(R.id.floatingActionMenu)
 
-        var flag = false
         findViewById<View>(R.id.floatingActionButton).setOnClickListener {
-            flag = if (flag) {
-                menu.open()
-                false
-            } else {
-                menu.close()
-                true
-            }
+            menu.switchMenuState()
         }
     }
+
+
 }

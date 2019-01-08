@@ -18,6 +18,7 @@ class ActionMenu @JvmOverloads constructor(
 
     private lateinit var layout: Layout
     private lateinit var animator: Animator
+    private  var isMenuClosed = false
 
     private val parentPosition = Rect()
     private val anchorPosition = Rect(0, 0, 0, 0)
@@ -32,6 +33,7 @@ class ActionMenu @JvmOverloads constructor(
             anchorId = getResourceId(R.styleable.ActionMenu_anchor, -1)
             setLayout(getString(R.styleable.ActionMenu_menu_layout))
             setAnimator(getString(R.styleable.ActionMenu_menu_animator))
+            setDefaultMenuState(getBoolean(R.styleable.ActionMenu_is_closed,false))
             recycle()
         }
     }
@@ -50,12 +52,31 @@ class ActionMenu @JvmOverloads constructor(
         }
     }
 
+    private fun setDefaultMenuState(isMenuClosed: Boolean?){
+        if (isMenuClosed != null) {
+            this.isMenuClosed = isMenuClosed
+        }
+    }
+
+    private fun setMenuControlState(){
+        if(this.isMenuClosed){
+            this.close()
+        }else{
+            this.open()
+        }
+    }
+
     private fun getClazz(classString: String?): Class<*> {
         try {
             return javaClass.classLoader.loadClass(classString)
         } catch (e: Exception) {
             throw IllegalArgumentException("$classString doesn't exist", e)
         }
+    }
+
+    fun switchMenuState(){
+        this.isMenuClosed = !this.isMenuClosed
+        setMenuControlState()
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
@@ -83,6 +104,7 @@ class ActionMenu @JvmOverloads constructor(
             }
         }
         layout()
+        setMenuControlState()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

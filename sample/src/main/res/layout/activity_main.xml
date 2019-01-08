@@ -30,7 +30,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:menu_animator="com.madrapps.bubbles.animators.VerticalStackedAnimator"
-        app:menu_layout="com.madrapps.bubbles.layouts.VerticalStackedLayout">
+        app:menu_layout="com.madrapps.bubbles.layouts.VerticalStackedLayout"
+        app:is_closed="true">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton1"
