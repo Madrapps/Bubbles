@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "com.jfrog.bintray"
 
-def projectVersion = "0.1.2"
+def projectVersion = "0.1.3"
 def projectGroupId = "com.github.madrapps"
 def siteUrl = 'https://github.com/Madrapps/Bubbles'
 def gitUrl = 'https://github.com/Madrapps/Bubbles.git'

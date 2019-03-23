@@ -7,11 +7,14 @@ import com.madrapps.bubbles.ActionMenu
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var menu: ActionMenu
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val menu = findViewById<ActionMenu>(R.id.floatingActionMenu)
+        menu = findViewById<ActionMenu>(R.id.floatingActionMenu)
+        menu.close()
 
         var flag = false
         findViewById<View>(R.id.floatingActionButton).setOnClickListener {
@@ -23,5 +26,15 @@ class MainActivity : AppCompatActivity() {
                 true
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        menu.open()
+        menu.close()
     }
 }
